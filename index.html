@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Algodão-Geag</title>
+    <title>Avaliação Algodão-Geag</title>
     <link rel="shortcut icon" type="imagex/png" href="Design sem nome (16).png">
     <style>
        * {
@@ -122,7 +122,7 @@
 </head>
 <body>
     <header>
-        <h1> Algodão-Geag</h1>
+        <h1>Avaliação Algodão-Geag</h1>
     </header>
     <div class="main-content">
         <div class="app-container">
@@ -168,7 +168,6 @@
                 <div class="form-group">
                     <label for="danosamostra">Danos:</label>
                     <select id="danosamostra">
-                         <option value="NDA">NDA-Nenhum Dano</option>
                         <optgroup label="Botões">
                             <option value="BDBO">BDBO-Botão Bicudo Oviposição</option>
                             <option value="BDBA">BDBA-Botão Bicudo Alimentação</option>
@@ -250,7 +249,7 @@
                 <div class="form-group">
                     <label for="tipoOrganismo">Tipo de Organismo:</label>
                     <select id="tipoOrganismo">
-                        <option value="NOE">NOE-Nenhum Organismo Encontrado</option>
+                        <option value="outros">Outros</option>
                         <optgroup label="Sugadores/Desfolhadores">
                             <option value="TRI">TRI-Tripes fitófago</option>
                             <option value="TRIP">TRIP-Tripes predador</option>
@@ -276,7 +275,6 @@
                             <option value="BLA">Adulto Bicho-lixeiro</option>
                             <option value="OBL">Ovo bicho-lixeiro</option>
                             <option value="TES">TES-Tesourinha</option>
-                             <option value="PGM">PGM-Pulgão Mumificado</option
                             <option value="JOA">JOA-Joaninha</option>
                             <option value="CYC">JOC-Joaninha cycloneda</option>      
                             <option value="JP">JP-Joaninha Hipodamia</option>
@@ -292,7 +290,6 @@
                             <option value="FOR">FOR-Formiga</option>
                             <option value="ARA">ARA-Aranha Predadora</option>
                             <option value="REDU">REDU-Reduviidae</option>
-                              <option value="AC">AC-Acaro</option>
                         </optgroup>
                     </select>
                 </div>
@@ -326,85 +323,115 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+       document.addEventListener('DOMContentLoaded', () => {
     const btnPartesReprodutivas = document.getElementById('btnPartesReprodutivas');
     const btnOrganismos = document.getElementById('btnOrganismos');
     const formPartesReprodutivas = document.getElementById('formPartesReprodutivas');
     const formOrganismos = document.getElementById('formOrganismos');
-    const tabelaReprodutivas = document.getElementById('tabelaReprodutivas');
-    const tabelaOrganismos = document.getElementById('tabelaOrganismos');
-    const pragueiroInput = document.getElementById('pragueiro');
-    const dataInput = document.getElementById('data');
-    const pragueiroOrganismosInput = document.getElementById('pragueiroOrganismos');
-    const dataOrganismosInput = document.getElementById('dataOrganismos');
 
-    let dadosReprodutivas = JSON.parse(localStorage.getItem('dadosReprodutivas')) || [];
-    let dadosOrganismos = JSON.parse(localStorage.getItem('dadosOrganismos')) || [];
+    // Função para alternar a visibilidade dos formulários
+    const alternarFormulario = (formularioVisivel) => {
+        if (formularioVisivel === 'PartesReprodutivas') {
+            formPartesReprodutivas.style.display = 'block';
+            formOrganismos.style.display = 'none';
+        } else if (formularioVisivel === 'Organismos') {
+            formPartesReprodutivas.style.display = 'none';
+            formOrganismos.style.display = 'block';
+        }
+    };
 
-    function salvarCamposFixos() {
-        localStorage.setItem('pragueiroFixos', pragueiroInput.value);
-        localStorage.setItem('dataFixos', dataInput.value);
-        localStorage.setItem('pragueiroOrganismosFixos', pragueiroOrganismosInput.value);
-        localStorage.setItem('dataOrganismosFixos', dataOrganismosInput.value);
-    }
+    // Adicionar eventos aos botões
+    btnPartesReprodutivas.addEventListener('click', () => {
+        alternarFormulario('PartesReprodutivas');
+    });
 
-    function carregarCamposFixos() {
-        pragueiroInput.value = localStorage.getItem('pragueiroFixos') || '';
-        dataInput.value = localStorage.getItem('dataFixos') || '';
-        pragueiroOrganismosInput.value = localStorage.getItem('pragueiroOrganismosFixos') || '';
-        dataOrganismosInput.value = localStorage.getItem('dataOrganismosFixos') || '';
-    }
+    btnOrganismos.addEventListener('click', () => {
+        alternarFormulario('Organismos');
+    });
 
-    function mostrarFormulario(tipo) {
-        formPartesReprodutivas.style.display = tipo === 'reprodutivas' ? 'block' : 'none';
-        formOrganismos.style.display = tipo === 'organismos' ? 'block' : 'none';
-    }
 
-    function atualizarTabelaReprodutivas() {
-        tabelaReprodutivas.innerHTML = dadosReprodutivas.map((dado, index) => `
-            <tr>
-                <td>${dado.pragueiro}</td>
-                <td>${dado.data}</td>
-                <td>${dado.estagio}</td>
-                <td>${dado.planta}</td>
-                <td>${dado.botoes}</td>
-                <td>${dado.macas}</td>
-                <td>${dado.capulhos}</td>
-                <td>${dado.danos}</td>
-                <td>${dado.quantidadeDano}</td>
-                <td><button onclick="excluirLinhaReprodutivas(${index})">Excluir</button></td>
-            </tr>
-        `).join('');
-    }
-
-    function atualizarTabelaOrganismos() {
-        tabelaOrganismos.innerHTML = dadosOrganismos.map((dado, index) => `
-            <tr>
-                <td>${dado.pragueiro}</td>
-                <td>${dado.data}</td>
-                <td>${dado.numeroPlanta}</td>
-                <td>${dado.tipoOrganismo}</td>
-                <td>${dado.quantidade}</td>
-                <td>${dado.observacoes}</td>
-                <td><button onclick="excluirLinhaOrganismos(${index})">Excluir</button></td>
-            </tr>
-        `).join('');
-    }
-
-    function excluirLinhaReprodutivas(index) {
-        dadosReprodutivas.splice(index, 1);
-        localStorage.setItem('dadosReprodutivas', JSON.stringify(dadosReprodutivas));
-        atualizarTabelaReprodutivas();
-    }
-
-    function excluirLinhaOrganismos(index) {
-        dadosOrganismos.splice(index, 1);
-        localStorage.setItem('dadosOrganismos', JSON.stringify(dadosOrganismos));
-        atualizarTabelaOrganismos();
-    }
-
-    function baixarDados(dados, nomeArquivo) {
+            const salvarReprodutivasBtn = document.getElementById('salvarReprodutivas');
+            const salvarOrganismosBtn = document.getElementById('salvarOrganismos');
+            const baixarExcelBtn = document.getElementById('baixarExcel');
+        
+            let dadosReprodutivas = JSON.parse(localStorage.getItem('dadosReprodutivas')) || [];
+            let dadosOrganismos = JSON.parse(localStorage.getItem('dadosOrganismos')) || [];
+        
+            const exibirMensagem = (mensagem, sucesso = true) => {
+                const mensagemDiv = document.createElement('div');
+                mensagemDiv.textContent = mensagem;
+                mensagemDiv.style.marginTop = '10px';
+                mensagemDiv.style.padding = '10px';
+                mensagemDiv.style.borderRadius = '5px';
+                mensagemDiv.style.color = '#fff';
+                mensagemDiv.style.backgroundColor = sucesso ? '#4CAF50' : '#f44336';
+                mensagemDiv.style.textAlign = 'center';
+                formPartesReprodutivas.parentElement.insertBefore(mensagemDiv, formPartesReprodutivas);
+        
+                setTimeout(() => {
+                    mensagemDiv.remove();
+                }, 3000);
+            };
+        
+            const atualizarTabelaReprodutivas = () => {
+                tabelaReprodutivas.innerHTML = '';
+                dadosReprodutivas.forEach((dado, index) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${dado.pragueiro}</td>
+                        <td>${dado.data}</td>
+                        <td>${dado.estagio}</td>
+                        <td>${dado.planta}</td>
+                        <td>${dado.botoes}</td>
+                        <td>${dado.macas}</td>
+                        <td>${dado.capulhos}</td>
+                        <td>${dado.danos}</td>
+                        <td>${dado.quantidadeDano}</td>
+                        <td><button class="excluirLinha" data-index="${index}">Excluir</button></td>
+                    `;
+                    tabelaReprodutivas.appendChild(tr);
+                });
+        
+                document.querySelectorAll('.excluirLinha').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const index = e.target.dataset.index;
+                        dadosReprodutivas.splice(index, 1);
+                        localStorage.setItem('dadosReprodutivas', JSON.stringify(dadosReprodutivas));
+                        atualizarTabelaReprodutivas();
+                        exibirMensagem('Linha excluída com sucesso!');
+                    });
+                });
+            };
+        
+            const atualizarTabelaOrganismos = () => {
+                tabelaOrganismos.innerHTML = '';
+                dadosOrganismos.forEach((dado, index) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${dado.pragueiro}</td>
+                        <td>${dado.data}</td>
+                        <td>${dado.numeroPlanta}</td>
+                        <td>${dado.tipoOrganismo}</td>
+                        <td>${dado.quantidade}</td>
+                        <td>${dado.observacoes || '—'}</td>
+                        <td><button class="excluirLinha" data-index="${index}">Excluir</button></td>
+                    `;
+                    tabelaOrganismos.appendChild(tr);
+                });
+        
+                document.querySelectorAll('.excluirLinha').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const index = e.target.dataset.index;
+                        dadosOrganismos.splice(index, 1);
+                        localStorage.setItem('dadosOrganismos', JSON.stringify(dadosOrganismos));
+                        atualizarTabelaOrganismos();
+                        exibirMensagem('Linha excluída com sucesso!');
+                    });
+                });
+            };
+            function baixarDados(dados, nomeArquivo) {
         const csvContent = [
             Object.keys(dados[0]).join(','), // Cabeçalhos
             ...dados.map(obj => Object.values(obj).join(',')) // Linhas
@@ -420,82 +447,87 @@
         link.click();
         document.body.removeChild(link);
     }
-
-    btnPartesReprodutivas.addEventListener('click', () => mostrarFormulario('reprodutivas'));
-    btnOrganismos.addEventListener('click', () => mostrarFormulario('organismos'));
-
-    document.getElementById('salvarReprodutivas').addEventListener('click', () => {
-        const pragueiro = pragueiroInput.value;
-        const data = dataInput.value;
-        const estagio = document.getElementById('estagio').value;
-        const planta = document.getElementById('planta').value;
-        const botoes = document.getElementById('botoes').value;
-        const macas = document.getElementById('maca').value;
-        const capulhos = document.getElementById('capulhos').value;
-        const danos = document.getElementById('danosamostra').value;
-        const quantidadeDano = document.getElementById('quantidadeDano').value;
-
-        if (pragueiro && data && planta && botoes && maca && capulhos) {
-                dadosReprodutivas.push({ pragueiro, data, planta, botoes, maca, capulhos });
+            salvarReprodutivasBtn.addEventListener('click', () => {
+                const novoDado = {
+                    pragueiro: document.getElementById('pragueiro').value,
+                    data: document.getElementById('data').value,
+                    estagio: document.getElementById('estagio').value,
+                    planta: document.getElementById('planta').value,
+                    botoes: document.getElementById('botoes').value,
+                    macas: document.getElementById('maca').value,
+                    capulhos: document.getElementById('capulhos').value,
+                    danos: document.getElementById('danosamostra').value,
+                    quantidadeDano: document.getElementById('quantidadeDano').value,
+                };
+        
+                if (Object.values(novoDado).some(campo => campo === '')) {
+                    exibirMensagem('Preencha todos os campos!', false);
+                    return;
+                }
+        
+                dadosReprodutivas.push(novoDado);
                 localStorage.setItem('dadosReprodutivas', JSON.stringify(dadosReprodutivas));
-                salvarFixos();
-                atualizarTabela();
-            }
-        });
+                atualizarTabelaReprodutivas();
+                exibirMensagem('Dados de Partes Reprodutivas salvos com sucesso!');
+            });
+        
+            salvarOrganismosBtn.addEventListener('click', () => {
+                const novoDado = {
+                    pragueiro: document.getElementById('pragueiroOrganismos').value,
+                    data: document.getElementById('dataOrganismos').value,
+                    numeroPlanta: document.getElementById('numeroPlanta').value,
+                    tipoOrganismo: document.getElementById('tipoOrganismo').value,
+                    quantidade: document.getElementById('quantidade').value,
+                    observacoes: document.getElementById('observacoes').value || '',
+                };
+        
+                if (Object.values(novoDado).some(campo => campo === '' && campo !== novoDado.observacoes)) {
+                    exibirMensagem('Preencha todos os campos obrigatórios!', false);
+                    return;
+                }
+        
+                dadosOrganismos.push(novoDado);
+                localStorage.setItem('dadosOrganismos', JSON.stringify(dadosOrganismos));
+                atualizarTabelaOrganismos();
+                exibirMensagem('Dados de Entomofauna salvos com sucesso!');
+            });
+        
+         
 
-    document.getElementById('salvarOrganismos').addEventListener('click', () => {
-        const pragueiro = pragueiroOrganismosInput.value;
-        const data = dataOrganismosInput.value;
-        const numeroPlanta = document.getElementById('numeroPlanta').value;
-        const tipoOrganismo = document.getElementById('tipoOrganismo').value;
-        const quantidade = document.getElementById('quantidade').value;
-        const observacoes = document.getElementById('observacoes').value;
+        
+            // Funções para alternar entre os formulários
+            btnPartesReprodutivas.addEventListener('click', () => {
+                formPartesReprodutivas.style.display = 'block';
+                formOrganismos.style.display = 'none';
+            });
+        
+            btnOrganismos.addEventListener('click', () => {
+                formPartesReprodutivas.style.display = 'none';
+                formOrganismos.style.display = 'block';
+            });
+            function baixarDados(dados, nomeArquivo) {
+        const csvContent = [
+            Object.keys(dados[0]).join(','), // Cabeçalhos
+            ...dados.map(obj => Object.values(obj).join(',')) // Linhas
+        ].join('\n');
 
-        if (pragueiro && data && numeroPlanta && tipoOrganismo && quantidade) {
-            dadosOrganismos.push({ pragueiro, data, numeroPlanta, tipoOrganismo, quantidade, observacoes });
-            localStorage.setItem('dadosOrganismos', JSON.stringify(dadosOrganismos));
-            atualizarTabelaOrganismos();
-            salvarCamposFixos();
-        }
-    });
-
-    document.getElementById('baixarReprodutivas').addEventListener('click', () => {
-        if (dadosReprodutivas.length > 0) {
-            baixarDados(dadosReprodutivas, 'dados_reprodutivas');
-        }
-    });
-
-    document.getElementById('baixarOrganismos').addEventListener('click', () => {
-        if (dadosOrganismos.length > 0) {
-            baixarDados(dadosOrganismos, 'dados_organismos');
-        }
-    });
-
-
-document.getElementById('baixarReprodutivas').addEventListener('click', () => {
-    if (dadosReprodutivas.length > 0) {
-        baixarComoExcel(dadosReprodutivas, 'dadosReprodutivas');
-    } else {
-        alert('Nenhum dado para baixar.');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', `${nomeArquivo}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
-});
+        
+            atualizarTabelaReprodutivas();
+            atualizarTabelaOrganismos();
+        });
+        </script>
+        
+    
 
-
-    document.getElementById('baixarOrganismos').addEventListener('click', () => {
-        if (dadosOrganismos.length > 0) {
-            baixarDados(dadosOrganismos, 'dados_organismos');
-        }
-    });
-
-    carregarCamposFixos();
-    atualizarTabelaReprodutivas();
-    atualizarTabelaOrganismos();
-
-    // Torna as funções de exclusão acessíveis globalmente
-    window.excluirLinhaReprodutivas = excluirLinhaReprodutivas;
-    window.excluirLinhaOrganismos = excluirLinhaOrganismos;
-});
-
-</script>
 </body>
 </html>
