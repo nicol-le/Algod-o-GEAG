@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Algodão-Geag</title>
     <link rel="shortcut icon" type="imagex/png" href="Design sem nome (16).png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <style>
        * {
             margin: 0;
@@ -208,6 +209,7 @@
                     <input type="number" id="quantidadeDano" placeholder="Digite a quantidade de danos" required>
                 </div>
                 <button type="button" id="salvarReprodutivas">Salvar Dados</button>
+                <button type="button" id="baixarReprodutivas">Baixar Dados (Excel)</button>
 
             </form>
             <div class="visualizacao-dados">
@@ -335,163 +337,255 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const btnPartesReprodutivas = document.getElementById('btnPartesReprodutivas');
-            const btnOrganismos = document.getElementById('btnOrganismos');
-            const formPartesReprodutivas = document.getElementById('formPartesReprodutivas');
-            const formOrganismos = document.getElementById('formOrganismos');
-            const tabelaReprodutivas = document.getElementById('tabelaReprodutivas');
-            const tabelaOrganismos = document.getElementById('tabelaOrganismos');
+<script>
+   document.addEventListener('DOMContentLoaded', () => {
+        const btnPartesReprodutivas = document.getElementById('btnPartesReprodutivas');
+        const btnOrganismos = document.getElementById('btnOrganismos');
+        const formPartesReprodutivas = document.getElementById('formPartesReprodutivas');
+        const formOrganismos = document.getElementById('formOrganismos');
+        const tabelaReprodutivas = document.getElementById('tabelaReprodutivas');
+        const tabelaOrganismos = document.getElementById('tabelaOrganismos');
+        const btnDownloadReprodutivas = document.getElementById('baixarReprodutivas');
+        const btnDownloadOrganismos = document.getElementById('baixarOrganismos');
+        
+        let dadosReprodutivas = JSON.parse(localStorage.getItem('dadosReprodutivas')) || [];
+        let dadosOrganismos = JSON.parse(localStorage.getItem('dadosOrganismos')) || [];
     
-            let dadosReprodutivas = [];
-            let dadosOrganismos = [];
+        btnPartesReprodutivas.addEventListener('click', () => {
+            formPartesReprodutivas.style.display = 'block';
+            formOrganismos.style.display = 'none';
+        });
     
-            // Alternar entre os formulários
-            btnPartesReprodutivas.addEventListener('click', () => {
-                formPartesReprodutivas.style.display = 'block';
-                formOrganismos.style.display = 'none';
-            });
+        btnOrganismos.addEventListener('click', () => {
+            formPartesReprodutivas.style.display = 'none';
+            formOrganismos.style.display = 'block';
+        });
     
-            btnOrganismos.addEventListener('click', () => {
-                formPartesReprodutivas.style.display = 'none';
-                formOrganismos.style.display = 'block';
-            });
+        document.getElementById('salvarReprodutivas').addEventListener('click', () => {
+            const pragueiro = document.getElementById('pragueiro').value;
+            const data = document.getElementById('data').value;
+            const estagio = document.getElementById('estagio').value;
+            const planta = document.getElementById('planta').value;
+            const botoes = document.getElementById('botoes').value;
+            const maca = document.getElementById('maca').value;
+            const capulhos = document.getElementById('capulhos').value;
+            const danos = document.getElementById('danosamostra').value;
+            const quantidadeDano = document.getElementById('quantidadeDano').value;
     
-            // SALVAR DADOS - Partes Reprodutivas
-            document.getElementById('salvarReprodutivas').addEventListener('click', () => {
-                const pragueiro = document.getElementById('pragueiro').value;
-                const data = document.getElementById('data').value;
-                const estagio = document.getElementById('estagio').value;
-                const planta = document.getElementById('planta').value;
-                const botoes = document.getElementById('botoes').value;
-                const maca = document.getElementById('maca').value;
-                const capulhos = document.getElementById('capulhos').value;
-                const danos = document.getElementById('danosamostra').value;
-                const quantidadeDano = document.getElementById('quantidadeDano').value;
-    
-                if (!pragueiro || !data || !estagio || !planta || !botoes || !maca || !capulhos || !danos || !quantidadeDano) {
-                    alert('Preencha todos os campos!');
-                    return;
-                }
-    
-                dadosReprodutivas.push({ pragueiro, data, estagio, planta, botoes, maca, capulhos, danos, quantidadeDano });
-                atualizarTabelaReprodutivas();
-            });
-    
-            function atualizarTabelaReprodutivas() {
-                tabelaReprodutivas.innerHTML = '';
-                dadosReprodutivas.forEach((item, index) => {
-                    tabelaReprodutivas.innerHTML += `
-                        <tr>
-                            <td>${item.pragueiro}</td>
-                            <td>${item.data}</td>
-                            <td>${item.estagio}</td>
-                            <td>${item.planta}</td>
-                            <td>${item.botoes}</td>
-                            <td>${item.maca}</td>
-                            <td>${item.capulhos}</td>
-                            <td>${item.danos}</td>
-                            <td>${item.quantidadeDano}</td>
-                            <td><button onclick="removerReprodutiva(${index})">Excluir</button></td>
-                        </tr>
-                    `;
-                });
+            if (!pragueiro || !data || !estagio || !planta || !botoes || !maca || !capulhos || !danos || !quantidadeDano) {
+                alert('Preencha todos os campos!');
+                return;
             }
     
-            window.removerReprodutiva = function(index) {
-                dadosReprodutivas.splice(index, 1);
-                atualizarTabelaReprodutivas();
-            };
+            dadosReprodutivas.push({ pragueiro, data, estagio, planta, botoes, maca, capulhos, danos, quantidadeDano });
+            localStorage.setItem('dadosReprodutivas', JSON.stringify(dadosReprodutivas));
+            atualizarTabelaReprodutivas();
+        });
     
-            // SALVAR DADOS - Organismos (Correção aplicada aqui)
-            document.getElementById('salvarOrganismos').addEventListener('click', () => {
-                const organismo = document.getElementById('organismo').value;
-                const quantidade = document.getElementById('quantidadeOrganismo').value;
-                const data = document.getElementById('dataOrganismo').value;
+        function atualizarTabelaReprodutivas() {
+            tabelaReprodutivas.innerHTML = dadosReprodutivas.map((item, index) => `
+                <tr>
+                    <td>${item.pragueiro}</td>
+                    <td>${item.data}</td>
+                    <td>${item.estagio}</td>
+                    <td>${item.planta}</td>
+                    <td>${item.botoes}</td>
+                    <td>${item.maca}</td>
+                    <td>${item.capulhos}</td>
+                    <td>${item.danos}</td>
+                    <td>${item.quantidadeDano}</td>
+                    <td><button onclick="removerReprodutiva(${index})">Excluir</button></td>
+                </tr>`).join('');
+        }
     
-                if (!organismo || !quantidade || !data) {
-                    alert('Preencha todos os campos!');
-                    return;
-                }
+        window.removerReprodutiva = function (index) {
+            dadosReprodutivas.splice(index, 1);
+            localStorage.setItem('dadosReprodutivas', JSON.stringify(dadosReprodutivas));
+            atualizarTabelaReprodutivas();
+        };
     
-                dadosOrganismos.push({ organismo, quantidade, data });
-                atualizarTabelaOrganismos();
+        document.getElementById('salvarOrganismos').addEventListener('click', () => {
+            const organismo = document.getElementById('organismo').value;
+            const quantidade = document.getElementById('quantidadeOrganismo').value;
+            const data = document.getElementById('dataOrganismo').value;
+    
+            if (!organismo || !quantidade || !data) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+    
+            dadosOrganismos.push({ organismo, quantidade, data });
+            localStorage.setItem('dadosOrganismos', JSON.stringify(dadosOrganismos));
+            atualizarTabelaOrganismos();
+        });
+    
+        function atualizarTabelaOrganismos() {
+            tabelaOrganismos.innerHTML = dadosOrganismos.map((item, index) => `
+                <tr>
+                    <td>${item.organismo}</td>
+                    <td>${item.quantidade}</td>
+                    <td>${item.data}</td>
+                    <td><button onclick="removerOrganismo(${index})">Excluir</button></td>
+                </tr>`).join('');
+        }
+    
+        window.removerOrganismo = function (index) {
+            dadosOrganismos.splice(index, 1);
+            localStorage.setItem('dadosOrganismos', JSON.stringify(dadosOrganismos));
+            atualizarTabelaOrganismos();
+        };
+    
+        function baixarExcel(dados, nomeArquivo) {
+            if (dados.length === 0) {
+                alert('Nenhum dado para exportar!');
+                return;
+            }
+            
+            const ws = XLSX.utils.json_to_sheet(dados);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Dados');
+            XLSX.writeFile(wb, nomeArquivo);
+        }
+    
+        btnDownloadReprodutivas.addEventListener('click', () => baixarExcel(dadosReprodutivas, 'PartesReprodutivas.xlsx'));
+        btnDownloadOrganismos.addEventListener('click', () => baixarExcel(dadosOrganismos, 'Organismos.xlsx'));
+    
+        atualizarTabelaReprodutivas();
+        atualizarTabelaOrganismos();
+    
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => console.log('Service Worker registrado:', registration))
+                    .catch((error) => console.log('Erro ao registrar o Service Worker:', error));
             });
-    
-            function atualizarTabelaOrganismos() {
-                tabelaOrganismos.innerHTML = '';
-                dadosOrganismos.forEach((item, index) => {
-                    tabelaOrganismos.innerHTML += `
-                        <tr>
-                            <td>${item.organismo}</td>
-                            <td>${item.quantidade}</td>
-                            <td>${item.data}</td>
-                            <td><button onclick="removerOrganismo(${index})">Excluir</button></td>
-                        </tr>
-                    `;
-                });
-            }
-    
-            window.removerOrganismo = function(index) {
-                dadosOrganismos.splice(index, 1);
-                atualizarTabelaOrganismos();
-            };
-    
-            // Criar os botões de download e colocá-los logo abaixo dos botões de salvar
-            function criarBotaoDownload(idBotao, texto, tabela, nomeArquivo) {
-                const botao = document.createElement('button');
-                botao.id = idBotao;
-                botao.textContent = texto;
-                botao.style.marginLeft = '10px';
-                botao.addEventListener('click', () => baixarExcel(tabela, nomeArquivo));
-                return botao;
-            }
-    
-            const btnDownloadReprodutivas = criarBotaoDownload(
-                'baixarReprodutivas',
-                'Baixar Excel - Partes Reprodutivas',
-                'tabelaReprodutivas',
-                'PartesReprodutivas.xlsx'
-            );
-    
-            const btnDownloadOrganismos = criarBotaoDownload(
-                'baixarOrganismos',
-                'Baixar Excel - Organismos',
-                'tabelaOrganismos',
-                'Organismos.xlsx'
-            );
-    
-            // Adicionar os botões abaixo dos botões de salvar
-            document.getElementById('salvarReprodutivas').after(btnDownloadReprodutivas);
-            document.getElementById('salvarOrganismos').after(btnDownloadOrganismos);
-    
-            function baixarExcel(idTabela, nomeArquivo) {
-                const tabela = document.getElementById(idTabela);
-                if (!tabela || tabela.rows.length === 0) {
-                    alert('Nenhum dado para exportar!');
-                    return;
-                }
-    
-                const ws = XLSX.utils.table_to_sheet(tabela);
-                const wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, 'Dados');
-                XLSX.writeFile(wb, nomeArquivo);
-            }
-     if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then((registration) => {
-                console.log('Service Worker registrado com sucesso:', registration);
-            })
-            .catch((error) => {
-                console.log('Erro ao registrar o Service Worker:', error);
-            });
+        }
     });
-}
-});
-    </script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btnPartesReprodutivas = document.getElementById('btnPartesReprodutivas');
+    const btnOrganismos = document.getElementById('btnOrganismos');
+    const formPartesReprodutivas = document.getElementById('formPartesReprodutivas');
+    const formOrganismos = document.getElementById('formOrganismos');
+    const tabelaReprodutivas = document.getElementById('tabelaReprodutivas');
+    const tabelaOrganismos = document.getElementById('tabelaOrganismos');
+    const btnDownloadReprodutivas = document.getElementById('baixarReprodutivas');
+    const btnDownloadOrganismos = document.getElementById('baixarOrganismos');
     
+    let dadosReprodutivas = JSON.parse(localStorage.getItem('dadosReprodutivas')) || [];
+    let dadosOrganismos = JSON.parse(localStorage.getItem('dadosOrganismos')) || [];
+
+    btnPartesReprodutivas.addEventListener('click', () => {
+        formPartesReprodutivas.style.display = 'block';
+        formOrganismos.style.display = 'none';
+    });
+
+    btnOrganismos.addEventListener('click', () => {
+        formPartesReprodutivas.style.display = 'none';
+        formOrganismos.style.display = 'block';
+    });
+
+    document.getElementById('salvarReprodutivas').addEventListener('click', () => {
+        const pragueiro = document.getElementById('pragueiro').value;
+        const data = document.getElementById('data').value;
+        const estagio = document.getElementById('estagio').value;
+        const planta = document.getElementById('planta').value;
+        const botoes = document.getElementById('botoes').value;
+        const maca = document.getElementById('maca').value;
+        const capulhos = document.getElementById('capulhos').value;
+        const danos = document.getElementById('danosamostra').value;
+        const quantidadeDano = document.getElementById('quantidadeDano').value;
+
+        if (!pragueiro || !data || !estagio || !planta || !botoes || !maca || !capulhos || !danos || !quantidadeDano) {
+            alert('Preencha todos os campos!');
+            return;
+        }
+
+        dadosReprodutivas.push({ pragueiro, data, estagio, planta, botoes, maca, capulhos, danos, quantidadeDano });
+        localStorage.setItem('dadosReprodutivas', JSON.stringify(dadosReprodutivas));
+        atualizarTabelaReprodutivas();
+    });
+
+    function atualizarTabelaReprodutivas() {
+        tabelaReprodutivas.innerHTML = dadosReprodutivas.map((item, index) => `
+            <tr>
+                <td>${item.pragueiro}</td>
+                <td>${item.data}</td>
+                <td>${item.estagio}</td>
+                <td>${item.planta}</td>
+                <td>${item.botoes}</td>
+                <td>${item.maca}</td>
+                <td>${item.capulhos}</td>
+                <td>${item.danos}</td>
+                <td>${item.quantidadeDano}</td>
+                <td><button onclick="removerReprodutiva(${index})">Excluir</button></td>
+            </tr>`).join('');
+    }
+
+    window.removerReprodutiva = function (index) {
+        dadosReprodutivas.splice(index, 1);
+        localStorage.setItem('dadosReprodutivas', JSON.stringify(dadosReprodutivas));
+        atualizarTabelaReprodutivas();
+    };
+
+    document.getElementById('salvarOrganismos').addEventListener('click', () => {
+        const organismo = document.getElementById('organismo').value;
+        const quantidade = document.getElementById('quantidadeOrganismo').value;
+        const data = document.getElementById('dataOrganismo').value;
+
+        if (!organismo || !quantidade || !data) {
+            alert('Preencha todos os campos!');
+            return;
+        }
+
+        dadosOrganismos.push({ organismo, quantidade, data });
+        localStorage.setItem('dadosOrganismos', JSON.stringify(dadosOrganismos));
+        atualizarTabelaOrganismos();
+    });
+
+    function atualizarTabelaOrganismos() {
+        tabelaOrganismos.innerHTML = dadosOrganismos.map((item, index) => `
+            <tr>
+                <td>${item.organismo}</td>
+                <td>${item.quantidade}</td>
+                <td>${item.data}</td>
+                <td><button onclick="removerOrganismo(${index})">Excluir</button></td>
+            </tr>`).join('');
+    }
+
+    window.removerOrganismo = function (index) {
+        dadosOrganismos.splice(index, 1);
+        localStorage.setItem('dadosOrganismos', JSON.stringify(dadosOrganismos));
+        atualizarTabelaOrganismos();
+    };
+
+    function baixarExcel(dados, nomeArquivo) {
+        if (dados.length === 0) {
+            alert('Nenhum dado para exportar!');
+            return;
+        }
+        
+        const ws = XLSX.utils.json_to_sheet(dados);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Dados');
+        XLSX.writeFile(wb, nomeArquivo);
+    }
+
+    btnDownloadReprodutivas.addEventListener('click', () => baixarExcel(dadosReprodutivas, 'PartesReprodutivas.xlsx'));
+    btnDownloadOrganismos.addEventListener('click', () => baixarExcel(dadosOrganismos, 'Organismos.xlsx'));
+
+    atualizarTabelaReprodutivas();
+    atualizarTabelaOrganismos();
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then((registration) => console.log('Service Worker registrado:', registration))
+                .catch((error) => console.log('Erro ao registrar o Service Worker:', error));
+        });
+    }
+});
+    
+</script>
+ 
 </body>
 </html>
