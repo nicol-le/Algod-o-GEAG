@@ -1,24 +1,23 @@
-<<!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Algodão-Geag</title>
+    <title>Algodão-Geag</title>
     <link rel="shortcut icon" type="imagex/png" href="Design sem nome (16).png">
     <style>
-       * {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
 
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
             padding-top: 60px;
         }
-
 
         header {
             width: 100%;
@@ -34,7 +33,6 @@
             z-index: 10;
         }
 
-
         .main-content {
             margin-top: 20px;
             padding: 20px;
@@ -42,7 +40,6 @@
             flex-direction: column;
             align-items: center;
         }
-
 
         .app-container {
             max-width: 400px;
@@ -52,11 +49,9 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-
         .form-group {
             margin-bottom: 10px;
         }
-
 
         label {
             display: block;
@@ -64,14 +59,12 @@
             margin-bottom: 5px;
         }
 
-
         input, textarea, select, button {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
-
 
         button {
             background: #003399;
@@ -81,11 +74,9 @@
             margin-top: 10px;
         }
 
-
         button:hover {
             background: #0055cc;
         }
-
 
         .visualizacao-dados {
             margin-top: 20px;
@@ -93,13 +84,11 @@
             overflow-x: auto;
         }
 
-
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
         }
-
 
         th, td {
             border: 1px solid #ddd;
@@ -107,22 +96,19 @@
             text-align: center;
         }
 
-
         th {
             background-color: #003399;
             color: white;
         }
 
-
         #formPartesReprodutivas, #formOrganismos {
             display: none;
         }
-
     </style>
 </head>
 <body>
     <header>
-        <h1> Algodão-Geag</h1>
+        <h1>Algodão-Geag</h1>
     </header>
     <div class="main-content">
         <div class="app-container">
@@ -137,6 +123,13 @@
         <div id="formPartesReprodutivas" class="app-container" style="display: none;">
             <h3>Partes Reprodutivas</h3>
             <form id="formReprodutivas">
+                <div class="form-group">
+                    <label for="partes">Avaliação:</label>
+                    <select id="partes">
+                        <option value="solo">Solo</option>
+                        <option value="aerea">Aérea</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label for="pragueiro">Pragueiro:</label>
                     <input type="text" id="pragueiro" placeholder="Digite o nome do pragueiro" required>
@@ -168,39 +161,39 @@
                 <div class="form-group">
                     <label for="danosamostra">Danos:</label>
                     <select id="danosamostra">
-                         <option value="NDA">NDA-Nenhum Dano</option>
+                        <option value="NDA">NDA-Nenhum Dano</option>
                         <optgroup label="Botões">
                             <option value="BDBO">BDBO-Botão Bicudo Oviposição</option>
                             <option value="BDBA">BDBA-Botão Bicudo Alimentação</option>
                             <option value="BAN">BAN-Botão Abscisão Natural</option>
-                            <option value="BOPD">BOPD-Botão Ovipositado Predado </option>
+                            <option value="BOPD">BOPD-Botão Ovipositado Predado</option>
                             <option value="BDL">BDL-Botão Danificado Lagarta</option>
                             <option value="BD">BD-Botão Danificado</option>
                             <option value="FDVA">FDVA-Flor Danificada por Vaquinha</option>
                         </optgroup>
                         <optgroup label="Maçã">
-                            <option value="MDBO">MDBO-Maçã Bicudo Oviposição<option>                        <option value="MDBA">MDBA-Maçã Bicudo Alimentação</option>
+                            <option value="MDBO">MDBO-Maçã Bicudo Oviposição</option>
                             <option value="MDBA">MDBA-Maçã Bicudo Alimentação</option>
                             <option value="MAN">MAN-Maçã Abscisão Natural</option>
-                            <option value="MOPD">MOPD-Maçã Ovipositado Predado </option>
+                            <option value="MOPD">MOPD-Maçã Ovipositado Predado</option>
                             <option value="MDL">MDL-Maçã Danificado Lagarta</option>
                             <option value="MD">MD-Maçã Danificado</option>
                             <option value="MBP">MBP-Maçã Bico de Papagaio</option>
-                       </optgroup>
-                       <optgroup label="Capulho">
-                        <option value="CDBO">CDBO-Capulho Oviposição Bicudo</option>
-                        <option value="CDBA">CDBA-Capulho Alimentação Bicudo</option>
-                        <option value="CAN">CAN-Capulho Abscisão Natural</option>
-                        <option value="CDF">CDF-Capulho Disturbio Funcional</option>
-                        <option value="COPD">COPD-Capulho Ovipositado Predado </option>
-                        <option value="CDL">CDL-Capulho Danificado Lagarta</option>
-                        <option value="CD">CD-Capulho Danificado </option>
-                    </optgroup>
-                    <optgroup label="Outro">
-                        <option value="outro">Outro</option>
-                        <option value="carima">Carimã</option>
-                        <option value="causa">Causa Desconhecida</option>
-                    </optgroup>
+                        </optgroup>
+                        <optgroup label="Capulho">
+                            <option value="CDBO">CDBO-Capulho Oviposição Bicudo</option>
+                            <option value="CDBA">CDBA-Capulho Alimentação Bicudo</option>
+                            <option value="CAN">CAN-Capulho Abscisão Natural</option>
+                            <option value="CDF">CDF-Capulho Disturbio Funcional</option>
+                            <option value="COPD">COPD-Capulho Ovipositado Predado</option>
+                            <option value="CDL">CDL-Capulho Danificado Lagarta</option>
+                            <option value="CD">CD-Capulho Danificado</option>
+                        </optgroup>
+                        <optgroup label="Outro">
+                            <option value="outro">Outro</option>
+                            <option value="carima">Carimã</option>
+                            <option value="causa">Causa Desconhecida</option>
+                        </optgroup>
                     </select>
                 </div>
                 <div class="form-group">
@@ -215,6 +208,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>Avaliação</th>
                             <th>Pragueiro</th>
                             <th>Data</th>
                             <th>Estágio</th>
@@ -248,8 +242,8 @@
                     <input type="number" id="numeroPlanta" placeholder="Digite o número da planta" required>
                 </div>
                 <div class="form-group">
-                    <label for="estagioorganismo">Estagio da Planta:</label>
-                    <input type="text" id="estagioorganismo" placeholder="Digite o estagio da planta" required>
+                    <label for="estagioorganismo">Estágio da Planta:</label>
+                    <input type="text" id="estagioorganismo" placeholder="Digite o estágio da planta" required>
                 </div>
                 <div class="form-group">
                     <label for="tipoOrganismo">Tipo de Organismo:</label>
@@ -259,7 +253,7 @@
                         <optgroup label="Sugadores/Desfolhadores">
                             <option value="TRI">TRI-Tripes fitófago</option>
                             <option value="TRIP">TRIP-Tripes predador</option>
-                            <option value="PER">PER-Percevejo desconhcido</option>
+                            <option value="PER">PER-Percevejo desconhecido</option>
                             <option value="PERAP">PERAP-Edessa meditabunda</option>
                             <option value="PG">PG-Pulgão</option>
                             <option value="NFMB">NFMB-Ninfa mosca-branca</option>
@@ -267,10 +261,10 @@
                             <option value="LG">LGG-Lagarta desconhecida</option>
                             <option value="ANTC">ANTC-Anticarsia gemmatalis</option>
                             <option value="HEL">HEL-lagarta helicoverpa</option>
-                           <option value="FAL">FAL-Falsa medideira</option>
-                             <option value="PLU">PLU-Plutella xyllostella</option>
-                             <option value="SPO">SPOD-Spodoptera spp.</option>
-                              <option value="ABIC">ABIC-Adulto Bicudo Algodoeiro</option>
+                            <option value="FAL">FAL-Falsa medideira</option>
+                            <option value="PLU">PLU-Plutella xyllostella</option>
+                            <option value="SPO">SPOD-Spodoptera spp.</option>
+                            <option value="ABIC">ABIC-Adulto Bicudo Algodoeiro</option>
                             <option value="LBIC">LBIC-Larva Bicudo Algodoeiro</option>
                         </optgroup>
                         <optgroup label="Polinizadores">
@@ -283,9 +277,9 @@
                             <option value="BLA">Adulto Bicho-lixeiro</option>
                             <option value="OBL">Ovo bicho-lixeiro</option>
                             <option value="TES">TES-Tesourinha</option>
-                             <option value="PGM">PGM-Pulgão Mumificado</option
+                            <option value="PGM">PGM-Pulgão Mumificado</option>
                             <option value="JOA">JOA-Joaninha</option>
-                            <option value="CYC">JOC-Joaninha cycloneda</option>      
+                            <option value="CYC">JOC-Joaninha cycloneda</option>
                             <option value="JP">JP-Joaninha Hipodamia</option>
                             <option value="LJ">LJ-Larva Joaninha</option>
                             <option value="LHIP">LHIP-Larva Joaninha Eriopis</option>
@@ -299,11 +293,10 @@
                             <option value="FOR">FOR-Formiga</option>
                             <option value="ARA">ARA-Aranha Predadora</option>
                             <option value="REDU">REDU-Reduviidae</option>
-                              <option value="AC">AC-Acaro</option>
+                            <option value="AC">AC-Acaro</option>
                         </optgroup>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label for="quantidade">Quantidade:</label>
                     <input type="number" id="quantidade" placeholder="Digite a quantidade" required>
@@ -323,7 +316,7 @@
                             <th>Pragueiro</th>
                             <th>Data</th>
                             <th>Número da Planta</th>
-                            <th>Estagio</th>
+                            <th>Estágio</th>
                             <th>Tipo de Organismo</th>
                             <th>Quantidade</th>
                             <th>Observações</th>
@@ -335,189 +328,192 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-    const btnPartesReprodutivas = document.getElementById('btnPartesReprodutivas');
-    const btnOrganismos = document.getElementById('btnOrganismos');
-    const formPartesReprodutivas = document.getElementById('formPartesReprodutivas');
-    const formOrganismos = document.getElementById('formOrganismos');
-    const tabelaReprodutivas = document.getElementById('tabelaReprodutivas');
-    const tabelaOrganismos = document.getElementById('tabelaOrganismos');
-    const pragueiroInput = document.getElementById('pragueiro');
-    const dataInput = document.getElementById('data');
-    const pragueiroOrganismosInput = document.getElementById('pragueiroOrganismos');
-    const dataOrganismosInput = document.getElementById('dataOrganismos');
+    document.addEventListener('DOMContentLoaded', () => {
+        const btnPartesReprodutivas = document.getElementById('btnPartesReprodutivas');
+        const btnOrganismos = document.getElementById('btnOrganismos');
+        const formPartesReprodutivas = document.getElementById('formPartesReprodutivas');
+        const formOrganismos = document.getElementById('formOrganismos');
+        const tabelaReprodutivas = document.getElementById('tabelaReprodutivas');
+        const tabelaOrganismos = document.getElementById('tabelaOrganismos');
+        const pragueiroInput = document.getElementById('pragueiro');
+        const dataInput = document.getElementById('data');
+        const partesSelect = document.getElementById('partes'); // Seleção de avaliação (Solo ou Aérea)
+        const pragueiroOrganismosInput = document.getElementById('pragueiroOrganismos');
+        const dataOrganismosInput = document.getElementById('dataOrganismos');
 
-    let dadosReprodutivas = JSON.parse(localStorage.getItem('dadosReprodutivas')) || [];
-    let dadosOrganismos = JSON.parse(localStorage.getItem('dadosOrganismos')) || [];
+        let dadosReprodutivas = JSON.parse(localStorage.getItem('dadosReprodutivas')) || [];
+        let dadosOrganismos = JSON.parse(localStorage.getItem('dadosOrganismos')) || [];
 
-    function salvarCamposFixos() {
-        localStorage.setItem('pragueiroFixos', pragueiroInput.value);
-        localStorage.setItem('dataFixos', dataInput.value);
-        localStorage.setItem('pragueiroOrganismosFixos', pragueiroOrganismosInput.value);
-        localStorage.setItem('dataOrganismosFixos', dataOrganismosInput.value);
-    }
+        // Função para salvar campos fixos no localStorage
+        function salvarCamposFixos() {
+            localStorage.setItem('pragueiroFixos', pragueiroInput.value);
+            localStorage.setItem('dataFixos', dataInput.value);
+            localStorage.setItem('partesFixos', partesSelect.value); // Salva a seleção de avaliação
+            localStorage.setItem('pragueiroOrganismosFixos', pragueiroOrganismosInput.value);
+            localStorage.setItem('dataOrganismosFixos', dataOrganismosInput.value);
+        }
 
-    function carregarCamposFixos() {
-        pragueiroInput.value = localStorage.getItem('pragueiroFixos') || '';
-        dataInput.value = localStorage.getItem('dataFixos') || '';
-        pragueiroOrganismosInput.value = localStorage.getItem('pragueiroOrganismosFixos') || '';
-        dataOrganismosInput.value = localStorage.getItem('dataOrganismosFixos') || '';
-    }
+        // Função para carregar campos fixos do localStorage
+        function carregarCamposFixos() {
+            pragueiroInput.value = localStorage.getItem('pragueiroFixos') || '';
+            dataInput.value = localStorage.getItem('dataFixos') || '';
+            partesSelect.value = localStorage.getItem('partesFixos') || 'solo'; // Carrega a seleção de avaliação
+            pragueiroOrganismosInput.value = localStorage.getItem('pragueiroOrganismosFixos') || '';
+            dataOrganismosInput.value = localStorage.getItem('dataOrganismosFixos') || '';
+        }
 
-    function mostrarFormulario(tipo) {
-        formPartesReprodutivas.style.display = tipo === 'reprodutivas' ? 'block' : 'none';
-        formOrganismos.style.display = tipo === 'organismos' ? 'block' : 'none';
-    }
+        // Função para mostrar o formulário correto
+        function mostrarFormulario(tipo) {
+            formPartesReprodutivas.style.display = tipo === 'reprodutivas' ? 'block' : 'none';
+            formOrganismos.style.display = tipo === 'organismos' ? 'block' : 'none';
+        }
 
-    function atualizarTabelaReprodutivas() {
-    tabelaReprodutivas.innerHTML = dadosReprodutivas.map((dado, index) => `
-        <tr>
-            <td>${dado.pragueiro}</td>
-            <td>${dado.data}</td>
-            <td>${dado.estagio}</td>
-            <td>${dado.planta}</td>
-            <td>${dado.botoes}</td>
-            <td>${dado.macas}</td>
-            <td>${dado.capulhos}</td>
-            <td>${dado.danos}</td>
-            <td>${dado.quantidadeDano}</td>
-            <td><button onclick="excluirLinhaReprodutivas(${index})">Excluir</button></td>
-        </tr>
-    `).join(''); // Garante que os itens sejam concatenados corretamente
-}
+        // Função para atualizar a tabela de partes reprodutivas
+        function atualizarTabelaReprodutivas() {
+            tabelaReprodutivas.innerHTML = dadosReprodutivas.map((dado, index) => `
+                <tr>
+                    <td>${dado.avaliacao}</td> <!-- Exibe a avaliação (Solo ou Aérea) -->
+                    <td>${dado.pragueiro}</td>
+                    <td>${dado.data}</td>
+                    <td>${dado.estagio}</td>
+                    <td>${dado.planta}</td>
+                    <td>${dado.botoes}</td>
+                    <td>${dado.macas}</td>
+                    <td>${dado.capulhos}</td>
+                    <td>${dado.danos}</td>
+                    <td>${dado.quantidadeDano}</td>
+                    <td><button onclick="excluirLinhaReprodutivas(${index})">Excluir</button></td>
+                </tr>
+            `).join('');
+        }
 
-function atualizarTabelaOrganismos() {
-    tabelaOrganismos.innerHTML = dadosOrganismos.map((dado, index) => `
-        <tr>
-            <td>${dado.pragueiro}</td>
-            <td>${dado.data}</td>
-            <td>${dado.numeroPlanta}</td>
-            <td>${dado. estagioorganismo}</td>
-            <td>${dado.tipoOrganismo}</td>
-            <td>${dado.quantidade}</td>
-            <td>${dado.observacoes}</td>
-            <td><button onclick="excluirLinhaOrganismos(${index})">Excluir</button></td>
-        </tr>
-    `).join('');
-}
+        // Função para atualizar a tabela de organismos
+        function atualizarTabelaOrganismos() {
+            tabelaOrganismos.innerHTML = dadosOrganismos.map((dado, index) => `
+                <tr>
+                    <td>${dado.pragueiro}</td>
+                    <td>${dado.data}</td>
+                    <td>${dado.numeroPlanta}</td>
+                    <td>${dado.estagioorganismo}</td>
+                    <td>${dado.tipoOrganismo}</td>
+                    <td>${dado.quantidade}</td>
+                    <td>${dado.observacoes}</td>
+                    <td><button onclick="excluirLinhaOrganismos(${index})">Excluir</button></td>
+                </tr>
+            `).join('');
+        }
 
+        // Função para excluir uma linha da tabela de partes reprodutivas
+        function excluirLinhaReprodutivas(index) {
+            dadosReprodutivas.splice(index, 1);
+            localStorage.setItem('dadosReprodutivas', JSON.stringify(dadosReprodutivas));
+            atualizarTabelaReprodutivas();
+        }
 
-    function excluirLinhaReprodutivas(index) {
-        dadosReprodutivas.splice(index, 1);
-        localStorage.setItem('dadosReprodutivas', JSON.stringify(dadosReprodutivas));
-        atualizarTabelaReprodutivas();
-    }
+        // Função para excluir uma linha da tabela de organismos
+        function excluirLinhaOrganismos(index) {
+            dadosOrganismos.splice(index, 1);
+            localStorage.setItem('dadosOrganismos', JSON.stringify(dadosOrganismos));
+            atualizarTabelaOrganismos();
+        }
 
-    function excluirLinhaOrganismos(index) {
-        dadosOrganismos.splice(index, 1);
-        localStorage.setItem('dadosOrganismos', JSON.stringify(dadosOrganismos));
-        atualizarTabelaOrganismos();
-    }
+        // Função para baixar dados em formato CSV
+        function baixarDados(dados, nomeArquivo) {
+            const csvContent = [
+                Object.keys(dados[0]).join(','), // Cabeçalhos
+                ...dados.map(obj => Object.values(obj).join(',')) // Linhas
+            ].join('\n');
 
-    function baixarDados(dados, nomeArquivo) {
-        const csvContent = [
-            Object.keys(dados[0]).join(','), // Cabeçalhos
-            ...dados.map(obj => Object.values(obj).join(',')) // Linhas
-        ].join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `${nomeArquivo}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
 
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.setAttribute('href', url);
-        link.setAttribute('download', `${nomeArquivo}.csv`);
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
+        // Event listeners para os botões de seleção de formulário
+        btnPartesReprodutivas.addEventListener('click', () => mostrarFormulario('reprodutivas'));
+        btnOrganismos.addEventListener('click', () => mostrarFormulario('organismos'));
 
-    btnPartesReprodutivas.addEventListener('click', () => mostrarFormulario('reprodutivas'));
-    btnOrganismos.addEventListener('click', () => mostrarFormulario('organismos'));
+        // Event listener para salvar dados de partes reprodutivas
+        document.getElementById('salvarReprodutivas').addEventListener('click', () => {
+            const avaliacao = partesSelect.value; // Captura a seleção de avaliação (Solo ou Aérea)
+            const pragueiro = pragueiroInput.value;
+            const data = dataInput.value;
+            const estagio = document.getElementById('estagio').value;
+            const planta = document.getElementById('planta').value;
+            const botoes = document.getElementById('botoes').value;
+            const macas = document.getElementById('maca').value;
+            const capulhos = document.getElementById('capulhos').value;
+            const danos = document.getElementById('danosamostra').value;
+            const quantidadeDano = document.getElementById('quantidadeDano').value;
 
-    document.getElementById('salvarReprodutivas').addEventListener('click', () => {
-        const pragueiro = pragueiroInput.value;
-        const data = dataInput.value;
-        const estagio = document.getElementById('estagio').value;
-        const planta = document.getElementById('planta').value;
-        const botoes = document.getElementById('botoes').value;
-        const macas = document.getElementById('maca').value;
-        const capulhos = document.getElementById('capulhos').value;
-        const danos = document.getElementById('danosamostra').value;
-        const quantidadeDano = document.getElementById('quantidadeDano').value;
-
-        if (pragueiro && data && planta && botoes && maca && capulhos) {
-                dadosReprodutivas.push({ pragueiro, data, planta, botoes, maca, capulhos });
+            if (pragueiro && data && planta && botoes && macas && capulhos) {
+                dadosReprodutivas.push({ avaliacao, pragueiro, data, estagio, planta, botoes, macas, capulhos, danos, quantidadeDano });
                 localStorage.setItem('dadosReprodutivas', JSON.stringify(dadosReprodutivas));
-                salvarFixos();
-                atualizarTabela();
+                salvarCamposFixos();
+                atualizarTabelaReprodutivas();
             }
         });
 
-    document.getElementById('salvarOrganismos').addEventListener('click', () => {
-        const pragueiro = pragueiroOrganismosInput.value;
-        const data = dataOrganismosInput.value;
-        const numeroPlanta = document.getElementById('numeroPlanta').value;
-        const estagioorganismo = document.getElementById('estagioorganismo').value;
-        const tipoOrganismo = document.getElementById('tipoOrganismo').value;
-        const quantidade = document.getElementById('quantidade').value;
-        const observacoes = document.getElementById('observacoes').value;
+        // Event listener para salvar dados de organismos
+        document.getElementById('salvarOrganismos').addEventListener('click', () => {
+            const pragueiro = pragueiroOrganismosInput.value;
+            const data = dataOrganismosInput.value;
+            const numeroPlanta = document.getElementById('numeroPlanta').value;
+            const estagioorganismo = document.getElementById('estagioorganismo').value;
+            const tipoOrganismo = document.getElementById('tipoOrganismo').value;
+            const quantidade = document.getElementById('quantidade').value;
+            const observacoes = document.getElementById('observacoes').value;
 
-        if (pragueiro && data && numeroPlanta &&  estagioorganismo && tipoOrganismo && quantidade) {
-            dadosOrganismos.push({ pragueiro, data, numeroPlanta,  estagioorganismo , tipoOrganismo, quantidade, observacoes });
-            localStorage.setItem('dadosOrganismos', JSON.stringify(dadosOrganismos));
-            atualizarTabelaOrganismos();
-            salvarCamposFixos();
-        }
-    });
+            if (pragueiro && data && numeroPlanta && estagioorganismo && tipoOrganismo && quantidade) {
+                dadosOrganismos.push({ pragueiro, data, numeroPlanta, estagioorganismo, tipoOrganismo, quantidade, observacoes });
+                localStorage.setItem('dadosOrganismos', JSON.stringify(dadosOrganismos));
+                atualizarTabelaOrganismos();
+                salvarCamposFixos();
+            }
+        });
 
-    document.getElementById('baixarReprodutivas').addEventListener('click', () => {
-        if (dadosReprodutivas.length > 0) {
-            baixarDados(dadosReprodutivas, 'dados_reprodutivas');
-        }
-    });
+        // Event listener para baixar dados de partes reprodutivas
+        document.getElementById('baixarReprodutivas').addEventListener('click', () => {
+            if (dadosReprodutivas.length > 0) {
+                baixarDados(dadosReprodutivas, 'dados_reprodutivas');
+            }
+        });
 
-    document.getElementById('baixarOrganismos').addEventListener('click', () => {
-        if (dadosOrganismos.length > 0) {
-            baixarDados(dadosOrganismos, 'dados_organismos');
-        }
-    });
+        // Event listener para baixar dados de organismos
+        document.getElementById('baixarOrganismos').addEventListener('click', () => {
+            if (dadosOrganismos.length > 0) {
+                baixarDados(dadosOrganismos, 'dados_organismos');
+            }
+        });
 
+        // Carregar campos fixos ao iniciar
+        carregarCamposFixos();
+        atualizarTabelaReprodutivas();
+        atualizarTabelaOrganismos();
 
-document.getElementById('baixarReprodutivas').addEventListener('click', () => {
-    if (dadosReprodutivas.length > 0) {
-        baixarComoExcel(dadosReprodutivas, 'dadosReprodutivas');
-    } else {
-        alert('Nenhum dado para baixar.');
-    }
-});
+        // Torna as funções de exclusão acessíveis globalmente
+        window.excluirLinhaReprodutivas = excluirLinhaReprodutivas;
+        window.excluirLinhaOrganismos = excluirLinhaOrganismos;
 
-
-    document.getElementById('baixarOrganismos').addEventListener('click', () => {
-        if (dadosOrganismos.length > 0) {
-            baixarDados(dadosOrganismos, 'dados_organismos');
-        }
-    });
-
-    carregarCamposFixos();
-    atualizarTabelaReprodutivas();
-    atualizarTabelaOrganismos();
-
-    // Torna as funções de exclusão acessíveis globalmente
-    window.excluirLinhaReprodutivas = excluirLinhaReprodutivas;
-    window.excluirLinhaOrganismos = excluirLinhaOrganismos;
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then((registration) => {
-                console.log('Service Worker registrado com sucesso:', registration);
-            })
-            .catch((error) => {
-                console.log('Erro ao registrar o Service Worker:', error);
+        // Registrar Service Worker para funcionamento offline
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('Service Worker registrado com sucesso:', registration);
+                    })
+                    .catch((error) => {
+                        console.log('Erro ao registrar o Service Worker:', error);
+                    });
             });
+        }
     });
-}
-});
-
 </script>
 </body>
 </html>
