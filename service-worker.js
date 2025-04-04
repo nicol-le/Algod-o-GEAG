@@ -2,11 +2,12 @@ const CACHE_NAME = 'entomoffauna-cache-v1';
 const urlsToCache = [
     '/',
     '/index.html',
-    '/favicon.ico',  // Adicione outros recursos estáticos como imagens, fontes etc.
+    '/favicon.ico',
+    '/manifest.json',
 ];
 
 self.addEventListener('install', (event) => {
-    // Instalar o Service Worker e fazer cache dos arquivos
+
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
@@ -16,7 +17,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-    // Tentar servir os recursos do cache quando estiver offline
+  
     event.respondWith(
         caches.match(event.request)
             .then((response) => {
@@ -26,7 +27,7 @@ self.addEventListener('fetch', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-    // Ativar o Service Worker e limpar caches antigos
+ 
     const cacheWhitelist = [CACHE_NAME];
     event.waitUntil(
         caches.keys().then((cacheNames) => {
